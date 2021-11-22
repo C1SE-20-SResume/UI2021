@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
 import logo from "../images/logo.png";
 import slider from "../images/sliderhome/slideimage1.jpg";
 import img1 from "../images/how-it-work/img1.png";
@@ -59,9 +60,21 @@ function Home() {
 
     animate();
   });
+  const [cookies, setCookies] = useCookies(["user"]);
+  const [listUsers, setListUser] = useState([]);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/popularjob`)
+      .then((res) => res.json())
+      .then((data) => {
+        setListUser(data.data);
+        console.log("check>>", data.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
-    <BrowserRouter>
+    <>
       <div className="slideshow">
         <div
           className="slideshowSlider"
@@ -95,181 +108,68 @@ function Home() {
             <p>Here's the most recent job listed on the website.</p>
           </div>
           <div className="container-content">
-            <div className="job-list-wrap">
-              <div className="job-shield">
-                <img className="logo-company-job" src={logo} />
-                <div className="col-content">
-                  <h4 className="job-title">FullStack Backend</h4>
-                  <p>
-                    <strong className="name-company">NFQ Asia</strong>
-                  </p>
-                </div>
-                <ul className="meta">
-                  <li>
-                    <span className="location-company">
-                      <ion-icon name="location"></ion-icon>
-                      <i>Ha Noi</i>
-                    </span>
-                  </li>
-                  <li>
-                    <span className="salary-company">
-                      <ion-icon name="cash"></ion-icon>
-                      <i>5000$</i>
-                    </span>
-                  </li>
-                  <li>
-                    <span className="dateUpdated-company">
-                      <ion-icon name="calendar"></ion-icon>
-                      <i>02/06/2021</i>
-                    </span>
-                  </li>
-                  <li>
-                    <span className="fulltime-company">
-                      <ion-icon name="time"></ion-icon>
-                      <i>Fulltime</i>
-                    </span>
-                  </li>
-                  <li>
-                    <span className="apply-company">
-                      <ion-icon name="arrow-forward"></ion-icon>
-                      <i>Aplly Now</i>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="job-list-wrap">
-              <div className="job-shield">
-                <img className="logo-company-job" src={logo} />
-                <div className="col-content">
-                  <h4 className="job-title">FullStack Backend</h4>
-                  <p>
-                    <strong className="name-company">NFQ Asia</strong>
-                  </p>
-                </div>
-                <ul className="meta">
-                  <li>
-                    <span className="location-company">
-                      <ion-icon name="location"></ion-icon>
-                      <i>Ha Noi</i>
-                    </span>
-                  </li>
-                  <li>
-                    <span className="salary-company">
-                      <ion-icon name="cash"></ion-icon>
-                      <i>5000$</i>
-                    </span>
-                  </li>
-                  <li>
-                    <span className="dateUpdated-company">
-                      <ion-icon name="calendar"></ion-icon>
-                      <i>02/06/2021</i>
-                    </span>
-                  </li>
-                  <li>
-                    <span className="fulltime-company">
-                      <ion-icon name="time"></ion-icon>
-                      <i>Fulltime</i>
-                    </span>
-                  </li>
-                  <li>
-                    <span className="apply-company">
-                      <ion-icon name="arrow-forward"></ion-icon>
-                      <i>Aplly Now</i>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="job-list-wrap">
-              <div className="job-shield">
-                <img className="logo-company-job" src={logo} />
-                <div className="col-content">
-                  <h4 className="job-title">FullStack Backend</h4>
-                  <p>
-                    <strong className="name-company">NFQ Asia</strong>
-                  </p>
-                </div>
-                <ul className="meta">
-                  <li>
-                    <span className="location-company">
-                      <ion-icon name="location"></ion-icon>
-                      <i>Ha Noi</i>
-                    </span>
-                  </li>
-                  <li>
-                    <span className="salary-company">
-                      <ion-icon name="cash"></ion-icon>
-                      <i>5000$</i>
-                    </span>
-                  </li>
-                  <li>
-                    <span className="dateUpdated-company">
-                      <ion-icon name="calendar"></ion-icon>
-                      <i>02/06/2021</i>
-                    </span>
-                  </li>
-                  <li>
-                    <span className="fulltime-company">
-                      <ion-icon name="time"></ion-icon>
-                      <i>Fulltime</i>
-                    </span>
-                  </li>
-                  <li>
-                    <span className="apply-company">
-                      <ion-icon name="arrow-forward"></ion-icon>
-                      <i>Aplly Now</i>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="job-list-wrap">
-              <div className="job-shield">
-                <img className="logo-company-job" src={logo} />
-                <div className="col-content">
-                  <h4 className="job-title">FullStack Backend</h4>
-                  <p>
-                    <strong className="name-company">NFQ Asia</strong>
-                  </p>
-                </div>
-                <ul className="meta">
-                  <li>
-                    <span className="location-company">
-                      <ion-icon name="location"></ion-icon>
-                      <i>Ha Noi</i>
-                    </span>
-                  </li>
-                  <li>
-                    <span className="salary-company">
-                      <ion-icon name="cash"></ion-icon>
-                      <i>5000$</i>
-                    </span>
-                  </li>
-                  <li>
-                    <span className="dateUpdated-company">
-                      <ion-icon name="calendar"></ion-icon>
-                      <i>02/06/2021</i>
-                    </span>
-                  </li>
-                  <li>
-                    <span className="fulltime-company">
-                      <ion-icon name="time"></ion-icon>
-                      <i>Fulltime</i>
-                    </span>
-                  </li>
-                  <li>
-                    <span className="apply-company">
-                      <ion-icon name="arrow-forward"></ion-icon>
-                      <i>Aplly Now</i>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
+            {listUsers &&
+              listUsers.length > 0 &&
+              listUsers.map((item, index) => {
+                return (
+                  <Link
+                    to={`/job-detail/${item.job_id}`}
+                    className="col-span-1"
+                    key={index}
+                  >
+                    <div className="job-list-wrap">
+                      <div className="job-shield">
+                        <img
+                          className="logo-company-job"
+                          id="img-logo-company"
+                          src={item.logo_url}
+                        />
+                        <div className="col-content">
+                          <h4 className="job-title">FullStack Backend</h4>
+                          <p>
+                            <strong className="name-company">NFQ Asia</strong>
+                          </p>
+                        </div>
+                        <ul className="meta">
+                          <li>
+                            <span className="location-company">
+                              <ion-icon name="location"></ion-icon>
+                              <i>Ha Noi</i>
+                            </span>
+                          </li>
+                          <li>
+                            <span className="salary-company">
+                              <ion-icon name="cash"></ion-icon>
+                              <i>5000$</i>
+                            </span>
+                          </li>
+                          <li>
+                            <span className="dateUpdated-company">
+                              <ion-icon name="calendar"></ion-icon>
+                              <i>02/06/2021</i>
+                            </span>
+                          </li>
+                          <li>
+                            <span className="fulltime-company">
+                              <ion-icon name="time"></ion-icon>
+                              <i>Fulltime</i>
+                            </span>
+                          </li>
+                          <li>
+                            <span className="apply-company">
+                              <ion-icon name="arrow-forward"></ion-icon>
+                              <i>Aplly Now</i>
+                            </span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
           </div>
           <div className="load-more-job">
-            <Link id="load-more-button" to="/">
+            <Link id="load-more-button" to="/joblist">
               Load more
             </Link>
           </div>
@@ -389,7 +289,7 @@ function Home() {
           </div>
         </div>
       </div>
-    </BrowserRouter>
+    </>
   );
 }
 

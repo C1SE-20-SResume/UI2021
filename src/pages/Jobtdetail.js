@@ -1,6 +1,8 @@
-import React, { useEffect } from "react";
 import img3 from "../images/how-it-work/img3.png";
-
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { ToastContainer, toast } from "react-toastify";
 function Jobtdetail() {
   useEffect(() => {
     document.querySelector("html").classList.add("js");
@@ -22,6 +24,53 @@ function Jobtdetail() {
       the_return.innerHTML = this.value;
     });
   });
+  const { job_id } = useParams();
+  const [cookies, setCookie] = useCookies(["user"]);
+  const [job, setJob] = useState({});
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/job/${job_id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setJob(data.data);
+        console.log("check>>", data.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  const handleSubmit = (e) => {
+    if (!cookies.user) {
+      toast.error("You are not login");
+    }
+    e.preventDefault();
+    // get the file
+    const file = document.getElementById("file").files[0];
+    const formData = new FormData();
+    formData.append("cv_file", file);
+    // random 1 - 5
+    const random = Math.floor(Math.random() * 5) + 1;
+    // job_id
+    formData.append("job_id", random);
+    fetch(
+      `${process.env.REACT_APP_API_URL}/candidate/job/upload?api_token=${cookies.user}`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success === true) {
+          toast.success("ok");
+          console.log("check data : ", data);
+        } else if (data.success === false) {
+          toast.error(data.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -202,9 +251,14 @@ function Jobtdetail() {
                 </div>
               </div>
               <div className="tab-input-file tab-info">
-                <form action="#">
+                <form onSubmit={handleSubmit}>
                   <div className="input-file-container">
-                    <input className="input-file" id="my-file" type="file" />
+                    <input
+                      className="input-file"
+                      name="file"
+                      id="file"
+                      type="file"
+                    />
                     <label
                       tabIndex={0}
                       htmlFor="my-file"
@@ -215,7 +269,7 @@ function Jobtdetail() {
                   </div>
                   <p className="file-return" />
                   <div className="button-submit-cv">
-                    <button>Submit </button>
+                    <button>Apply CV </button>
                   </div>
                 </form>
               </div>

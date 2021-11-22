@@ -1,6 +1,27 @@
-import React, { Component } from "react";
 import img3 from "../images/how-it-work/img3.png";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  BrowserRouter,
+} from "react-router-dom";
 function ListJob() {
+  const [cookies, setCookies] = useCookies(["user"]);
+  const [listUsers, setListUser] = useState([]);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/job`)
+      .then((res) => res.json())
+      .then((data) => {
+        setListUser(data.data);
+        console.log("check>>", data.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
   return (
     <>
       <div className="section-padding section-listjob">
@@ -74,162 +95,51 @@ function ListJob() {
               </div>
             </div>
             <div className="list-job-div ">
-              <div className="list-job-item">
-                <div className="item">
-                  <img
-                    src={img3}
-                    style={({ width: "84px" }, { height: "84px" })}
-                  ></img>
-                  <div>
-                    <div className="info-company">
-                      <div className="name-title">
-                        <h4>Fullstack Developer Java</h4>
-                        <span>FPT SOFTWARE</span>
+              {listUsers &&
+                listUsers.length > 0 &&
+                listUsers.map((item, index) => {
+                  return (
+                    <Link
+                      to={`/job-detail/${item.job_id}`}
+                      className="col-span-1"
+                      key={index}
+                    >
+                      <div className="list-job-item">
+                        <div className="item">
+                          <img
+                            src={item.logo_url}
+                            id="img-logo-company"
+                            style={({ width: "84px" }, { height: "84px" })}
+                          ></img>
+                          <div>
+                            <div className="info-company">
+                              <div className="name-title">
+                                <h4>Fullstack Developer Java</h4>
+                                <span>FPT SOFTWARE</span>
+                              </div>
+                              <div className="button-apply">
+                                <span>Full time</span>
+                                <p>Apply </p>
+                              </div>
+                            </div>
+                            <ul className="info-more">
+                              <li>
+                                <ion-icon name="location"></ion-icon> Ha Noi
+                              </li>
+                              <li>
+                                <ion-icon name="cash"></ion-icon> 1000$
+                              </li>
+                              <li>
+                                <ion-icon name="calendar-number"></ion-icon>{" "}
+                                02/06/2021
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
                       </div>
-                      <div className="button-apply">
-                        <span>Full time</span>
-                        <p>Apply </p>
-                      </div>
-                    </div>
-                    <ul className="info-more">
-                      <li>
-                        <ion-icon name="location"></ion-icon> Ha Noi
-                      </li>
-                      <li>
-                        <ion-icon name="cash"></ion-icon> 1000$
-                      </li>
-                      <li>
-                        <ion-icon name="calendar-number"></ion-icon> 02/06/2021
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="list-job-item">
-                <div className="item">
-                  <img
-                    src={img3}
-                    style={({ width: "84px" }, { height: "84px" })}
-                  ></img>
-                  <div>
-                    <div className="info-company">
-                      <div className="name-title">
-                        <h4>Fullstack Developer Java</h4>
-                        <span>FPT SOFTWARE</span>
-                      </div>
-                      <div className="button-apply">
-                        <span>Full time</span>
-                        <p>Apply </p>
-                      </div>
-                    </div>
-                    <ul className="info-more">
-                      <li>Ha Noi</li>
-                      <li>1000$</li>
-                      <li>02/06/2021</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="list-job-item">
-                <div className="item">
-                  <img
-                    src={img3}
-                    style={({ width: "84px" }, { height: "84px" })}
-                  ></img>
-                  <div>
-                    <div className="info-company">
-                      <div className="name-title">
-                        <h4>Fullstack Developer Java</h4>
-                        <span>FPT SOFTWARE</span>
-                      </div>
-                      <div className="button-apply">
-                        <span>Full time</span>
-                        <p>Apply </p>
-                      </div>
-                    </div>
-                    <ul className="info-more">
-                      <li>Ha Noi</li>
-                      <li>1000$</li>
-                      <li>02/06/2021</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="list-job-item">
-                <div className="item">
-                  <img
-                    src={img3}
-                    style={({ width: "84px" }, { height: "84px" })}
-                  ></img>
-                  <div>
-                    <div className="info-company">
-                      <div className="name-title">
-                        <h4>Fullstack Developer Java</h4>
-                        <span>FPT SOFTWARE</span>
-                      </div>
-                      <div className="button-apply">
-                        <span>Full time</span>
-                        <p>Apply </p>
-                      </div>
-                    </div>
-                    <ul className="info-more">
-                      <li>Ha Noi</li>
-                      <li>1000$</li>
-                      <li>02/06/2021</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="list-job-item">
-                <div className="item">
-                  <img
-                    src={img3}
-                    style={({ width: "84px" }, { height: "84px" })}
-                  ></img>
-                  <div>
-                    <div className="info-company">
-                      <div className="name-title">
-                        <h4>Fullstack Developer Java</h4>
-                        <span>FPT SOFTWARE</span>
-                      </div>
-                      <div className="button-apply">
-                        <span>Full time</span>
-                        <p>Apply </p>
-                      </div>
-                    </div>
-                    <ul className="info-more">
-                      <li>Ha Noi</li>
-                      <li>1000$</li>
-                      <li>02/06/2021</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="list-job-item">
-                <div className="item">
-                  <img
-                    src={img3}
-                    style={({ width: "84px" }, { height: "84px" })}
-                  ></img>
-                  <div>
-                    <div className="info-company">
-                      <div className="name-title">
-                        <h4>Fullstack Developer Java</h4>
-                        <span>FPT SOFTWARE</span>
-                      </div>
-                      <div className="button-apply">
-                        <span>Full time</span>
-                        <p>Apply </p>
-                      </div>
-                    </div>
-                    <ul className="info-more">
-                      <li>Ha Noi</li>
-                      <li>1000$</li>
-                      <li>02/06/2021</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+                    </Link>
+                  );
+                })}
             </div>
           </div>
         </div>

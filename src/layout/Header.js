@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../images/logo.png";
 import slider from "../images/sliderhome/slideimage1.jpg";
 import img3 from "../images/how-it-work/img3.png";
@@ -10,20 +10,61 @@ import {
   useRouteMatch,
   BrowserRouter,
 } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { toast } from "react-toastify";
 
 function Header() {
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+  console.log(setCookie);
+  const logout = (e) => {
+    fetch(`${process.env.REACT_APP_API_URL}/logout?api_token=${cookies.user}`, {
+      method: "POST",
+      redirect: "follow",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success === true) {
+          setCookie("user", data.api_token);
+          removeCookie("user");
+
+          window.location.reload();
+          console.log("check", data);
+        } else {
+          alert(data.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("m chua dang nhap");
+      });
+  };
+
+  const [listUsers, setListUser] = useState([]);
+
   useEffect(() => {
-    let click = document.querySelector(".click");
-
-    let list = document.querySelector(".list");
-
-    click.addEventListener("click", () => {
-      list.classList.toggle("newlist");
-    });
-  });
+    fetch(`${process.env.REACT_APP_API_URL}/popularjob`)
+      .then((res) => res.json())
+      .then((data) => {
+        setListUser(data.data);
+        console.log("check>>", data.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  // ----------------show user-----------------
+  const [userRole, setUserRole] = useState([]);
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/user?api_token=${cookies.user}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setUserRole(data);
+        console.log("role :", data.role_level);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  console.log("role level : ", userRole.role_level);
 
   return (
-    <BrowserRouter>
+    <>
       <div className="header">
         <div className="navigation">
           <img className="logo-company" src={logo} />
@@ -39,43 +80,61 @@ function Header() {
                 Job
               </Link>
             </li>
-            <li className="nav-menu-item">Quiz Test</li>
+            {cookies.user && userRole.role_level == 0 ? (
+              <li className="nav-menu-item">Quiz Test</li>
+            ) : (
+              []
+            )}
             <li className="nav-menu-item">
               {" "}
               <Link id="link">Contact</Link>
             </li>
+            {userRole.role_level == 1 ? (
+              <li className="nav-menu-item for-recrui">
+                {" "}
+                <Link id="link" to="/recruiter-page">For Recruiter</Link>
+              </li>
+            ) : (
+              []
+            )}
           </ul>
-          <div class="container3 ">
-            <button class="click">
-              <img
-                src={img3}
-                style={({ width: "50px" }, { height: "50px" })}
-                className="avt-pro"
-              ></img>
-              <span className="name-account">Candidate</span>
-            </button>
 
-            <div class="list">
-              <button class="links">
-                <ion-icon name="person" style={{ color: "white" }}></ion-icon>{" "}
-                Profile
-              </button>
-
-              <button class="links">
-                <ion-icon style={{ color: "white" }} name="log-out"></ion-icon>{" "}
-                Log Out
-              </button>
-            </div>
+          <div class="switch-div">
+            {cookies.user ? (
+              <nav id="primary_nav_wrap">
+                <ul>
+                  <li>
+                    <div class="img-avatar-acc">
+                      <img
+                        src={img3}
+                        style={({ width: "60px" }, { height: "60px" })}
+                      ></img>
+                      <span>Candidate</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <a href="#">Sub Menu 1</a>
+                      </li>
+                      <li>
+                        <p onClick={logout} style={{ cursor: "pointer" }}>
+                          <ion-icon name="log-out"></ion-icon> Logout
+                        </p>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </nav>
+            ) : (
+              <Link id="link" to="/login">
+                <div className="nav-function-login-reg">
+                  <div>Login</div>
+                </div>
+              </Link>
+            )}
           </div>
-
-          {/* <Link id="link" to="/">
-            <div className="nav-function-login-reg">
-              <div>Login</div>
-            </div>
-          </Link> */}
         </div>
       </div>
-    </BrowserRouter>
+    </>
   );
 }
 
