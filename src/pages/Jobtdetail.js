@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { ToastContainer, toast } from "react-toastify";
+import { Alert } from "bootstrap";
 function Jobtdetail() {
   useEffect(() => {
     document.querySelector("html").classList.add("js");
@@ -41,10 +42,20 @@ function Jobtdetail() {
   const handleSubmit = (e) => {
     if (!cookies.user) {
       toast.error("You are not login");
+    } else if (userRole.role_level == 1) {
+      toast.error(
+        "You are recruiter , Please login with your candidate account "
+      );
     }
+
     e.preventDefault();
     // get the file
+
     const file = document.getElementById("file").files[0];
+    if (!file) {
+      toast.error("You have not imported the cv file");
+      return;
+    }
     const formData = new FormData();
     formData.append("cv_file", file);
     // random 1 - 5
@@ -71,6 +82,17 @@ function Jobtdetail() {
         console.log(err);
       });
   };
+  const [userRole, setUserRole] = useState([]);
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/user?api_token=${cookies.user}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setUserRole(data);
+        console.log("role :", data.role_level);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  console.log("role level : ", userRole.role_level);
 
   return (
     <>

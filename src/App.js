@@ -39,15 +39,23 @@ function App() {
               <ListJob />
             </Route>
             <Route path="/job-detail/:job_id">
+              <Slider />
               <Jobtdetail />
             </Route>
-            <Router path="/recruiter-page">
+            <Route path="/recruiter-page">
               <Slider />
               <Recruiterpage />
-            </Router>
+            </Route>
             {!cookies.user && (
-              <Route path="/login">
-                <Login />
+              // <Route path="/login">
+              //   <Login />
+              // </Route>
+              <Route>
+                <Switch>
+                  <Route path="/login">
+                    <Login />
+                  </Route>
+                </Switch>
               </Route>
             )}
             <Route path="*">

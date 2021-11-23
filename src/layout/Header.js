@@ -92,7 +92,9 @@ function Header() {
             {userRole.role_level == 1 ? (
               <li className="nav-menu-item for-recrui">
                 {" "}
-                <Link id="link" to="/recruiter-page">For Recruiter</Link>
+                <Link id="link" to="/recruiter-page">
+                  For Recruiter
+                </Link>
               </li>
             ) : (
               []
@@ -109,7 +111,7 @@ function Header() {
                         src={img3}
                         style={({ width: "60px" }, { height: "60px" })}
                       ></img>
-                      <span>Candidate</span>
+                      <span>user</span>
                     </div>
                     <ul>
                       <li>
