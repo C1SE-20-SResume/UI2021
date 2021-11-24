@@ -23,6 +23,7 @@ import Recruiterpage from "./Recruiter/component/Recruiterpage";
 
 function App() {
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+
   return (
     <Router>
       <Switch>
@@ -30,28 +31,31 @@ function App() {
           <Header />
 
           <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route path="/joblist">
+            <Route path={`/joblist`}>
               <Slider />
               <ListJob />
             </Route>
-            <Route path="/job-detail/:job_id">
+            <Route path={`/job-detail/:job_id`}>
+              <Slider />
               <Jobtdetail />
             </Route>
-            <Router path="/recruiter-page">
+            <Route path={`/recruiter-page`}>
               <Slider />
               <Recruiterpage />
-            </Router>
+            </Route>
             {!cookies.user && (
-              <Route path="/login">
-                <Login />
+              // <Route path="/login">
+              //   <Login />
+              // </Route>
+              <Route>
+                <Switch>
+                  <Route path={`/login`}>
+                    <Login />
+                  </Route>
+                </Switch>
               </Route>
             )}
-            <Route path="*">
-              <Home />
-            </Route>
+            <Route exact path={`/`} component={Home} />
           </Switch>
         </Route>
       </Switch>

@@ -107,7 +107,7 @@ function Header() {
                         src={img3}
                         style={({ width: "60px" }, { height: "60px" })}
                       ></img>
-                      <span>Candidate</span>
+                      <span>user</span>
                     </div>
                     <ul>
                       <li>
