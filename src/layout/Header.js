@@ -2,21 +2,15 @@ import React, { useEffect, useState } from "react";
 import logo from "../images/logo.png";
 import slider from "../images/sliderhome/slideimage1.jpg";
 import img3 from "../images/how-it-work/img3.png";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useRouteMatch,
-  BrowserRouter,
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 
 function Header() {
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
-  console.log(setCookie);
+
   const logout = (e) => {
+    e.preventDefault();
     fetch(`${process.env.REACT_APP_API_URL}/logout?api_token=${cookies.user}`, {
       method: "POST",
       redirect: "follow",
@@ -53,15 +47,17 @@ function Header() {
   // ----------------show user-----------------
   const [userRole, setUserRole] = useState([]);
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/user?api_token=${cookies.user}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setUserRole(data);
-        console.log("role :", data.role_level);
-      })
-      .catch((err) => console.log(err));
+    if (cookies.user) {
+      fetch(`${process.env.REACT_APP_API_URL}/user?api_token=${cookies.user}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setUserRole(data);
+          console.log("role :", data.role_level);
+        })
+        .catch((err) => console.log(err));
+      console.log("role level : ", userRole.role_level);
+    }
   }, []);
-  console.log("role level : ", userRole.role_level);
 
   return (
     <>
@@ -89,13 +85,15 @@ function Header() {
               {" "}
               <Link id="link">Contact</Link>
             </li>
-            {userRole.role_level == 1 ? (
+            {userRole.role_level && userRole.role_level == 1 ? (
               <li className="nav-menu-item for-recrui">
                 {" "}
-                <Link id="link" to="/recruiter-page">For Recruiter</Link>
+                <Link id="link" to="/recruiter-page">
+                  For Recruiter
+                </Link>
               </li>
             ) : (
-              []
+              <></>
             )}
           </ul>
 

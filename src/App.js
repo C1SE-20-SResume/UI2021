@@ -1,8 +1,7 @@
-import "./App.css";
-
+import React from "react";
 import Msg from "./ReactToastify/Msg";
 import { useCookies } from "react-cookie";
-import React from "react";
+import "./App.css";
 import { ToastContainer, toast } from "react-toastify";
 import {
   BrowserRouter as Router,

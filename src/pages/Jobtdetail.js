@@ -24,6 +24,7 @@ function Jobtdetail() {
       the_return.innerHTML = this.value;
     });
   });
+
   const { job_id } = useParams();
   const [cookies, setCookie] = useCookies(["user"]);
   const [job, setJob] = useState({});
@@ -39,37 +40,39 @@ function Jobtdetail() {
   }, []);
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     if (!cookies.user) {
       toast.error("You are not login");
-    }
-    e.preventDefault();
-    // get the file
-    const file = document.getElementById("file").files[0];
-    const formData = new FormData();
-    formData.append("cv_file", file);
-    // random 1 - 5
-    const random = Math.floor(Math.random() * 5) + 1;
-    // job_id
-    formData.append("job_id", random);
-    fetch(
-      `${process.env.REACT_APP_API_URL}/candidate/job/upload?api_token=${cookies.user}`,
-      {
-        method: "POST",
-        body: formData,
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success === true) {
-          toast.success("ok");
-          console.log("check data : ", data);
-        } else if (data.success === false) {
-          toast.error(data.message);
+      return;
+    } else {
+      // get the file
+      const file = document.getElementById("file").files[0];
+      const formData = new FormData();
+      formData.append("cv_file", file);
+      // random 1 - 5
+      const random = Math.floor(Math.random() * 5) + 1;
+      // job_id
+      formData.append("job_id", random);
+      fetch(
+        `${process.env.REACT_APP_API_URL}/candidate/job/upload?api_token=${cookies.user}`,
+        {
+          method: "POST",
+          body: formData,
         }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success === true) {
+            toast.success("ok");
+            console.log("check data : ", data);
+          } else if (data.success === false) {
+            toast.error(data.message);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   return (
@@ -125,7 +128,7 @@ function Jobtdetail() {
               </div>
               <div className="col-title">
                 {" "}
-                <h2 class="title-ontop">Job Description :</h2>
+                <h2 className="title-ontop">Job Description :</h2>
               </div>
               <div className="colu-n n2">
                 <div className="cl-text">
@@ -151,7 +154,7 @@ function Jobtdetail() {
               </div>
               <div className="col-title">
                 {" "}
-                <h2 class="title-ontop">Job Benefit :</h2>
+                <h2 className="title-ontop">Job Benefit :</h2>
               </div>
               <div className="colu-n n3">
                 <div className="cl-text">
@@ -177,7 +180,7 @@ function Jobtdetail() {
               </div>
               <div className="col-title">
                 {" "}
-                <h2 class="title-ontop">Job require :</h2>
+                <h2 className="title-ontop">Job require :</h2>
               </div>
               <div className="colu-n n4">
                 <div className="cl-text">

@@ -1,16 +1,8 @@
 import img3 from "../images/how-it-work/img3.png";
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useCookies } from "react-cookie";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  BrowserRouter,
-} from "react-router-dom";
+
+import { Link } from "react-router-dom";
 function ListJob() {
-  const [cookies, setCookies] = useCookies(["user"]);
   const [listUsers, setListUser] = useState([]);
 
   useEffect(() => {
@@ -40,7 +32,6 @@ function ListJob() {
                 <div className="button-searching">
                   <input type="text" placeholder="searching....." />
                   <button type="submit">
-                    {" "}
                     <ion-icon name="search"></ion-icon>
                   </button>
                 </div>
@@ -49,46 +40,39 @@ function ListJob() {
                     <ion-icon name="location"></ion-icon> LOCATION
                   </span>
                   <div>
-                    <input type="radio" value="hanoi" name="location" />{" "}
+                    <input type="radio" value="hanoi" name="location" />
                     <label>Ha Noi</label>
                   </div>
                   <div>
-                    {" "}
-                    <input type="radio" value="danang" name="location" />{" "}
+                    <input type="radio" value="danang" name="location" />
                     <label> Da Nang</label>
                   </div>
                   <div>
-                    <input type="radio" value="hochiminh" name="location" />{" "}
+                    <input type="radio" value="hochiminh" name="location" />
                     <label>Ho Chi Minh</label>
                   </div>
                 </div>
                 <div className="option-radio-button salary-option">
                   <span>
-                    {" "}
                     <ion-icon name="cash"></ion-icon> SALARY
                   </span>
                   <div>
-                    {" "}
                     <input type="radio" checked="checked" /> <label>All</label>
                   </div>
                   <div>
-                    {" "}
-                    <input type="radio" value="danang" name="location" />{" "}
+                    <input type="radio" value="danang" name="location" />
                     <label>Under 1000$</label>
                   </div>
                   <div>
-                    {" "}
                     <input type="radio" value="1000" name="salary" />
                     <label> 1000 - 2000$</label>
                   </div>
                   <div>
-                    {" "}
-                    <input type="radio" value="1000" name="location" />{" "}
+                    <input type="radio" value="1000" name="location" />
                     <label>1000 - 3000$</label>
                   </div>
                   <div>
-                    {" "}
-                    <input type="radio" value="3000" name="location" />{" "}
+                    <input type="radio" value="3000" name="location" />
                     <label>Than 3000$</label>
                   </div>
                 </div>
@@ -130,7 +114,7 @@ function ListJob() {
                                 <ion-icon name="cash"></ion-icon> 1000$
                               </li>
                               <li>
-                                <ion-icon name="calendar-number"></ion-icon>{" "}
+                                <ion-icon name="calendar-number"></ion-icon>
                                 02/06/2021
                               </li>
                             </ul>
