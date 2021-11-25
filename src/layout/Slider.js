@@ -1,5 +1,5 @@
 import React from "react";
-
+import img3 from "../images/how-it-work/img3.png";
 const colors = ["#0088FE", "#00C49F", "#FFBB28"];
 const delay = 2500;
 function Slider() {

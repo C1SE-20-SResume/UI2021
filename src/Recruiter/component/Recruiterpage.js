@@ -10,6 +10,9 @@ import {
 import img from "./img1.png";
 import FuncAddJob from "../Page-recruiter-function/FuncAddJob";
 import FuncViewJob from "../Page-recruiter-function/FuncViewJob";
+import FuncJobAlert from "../Page-recruiter-function/FuncJobAlert";
+
+import { AddQues } from "../component";
 
 function Recruiterpage() {
   return (
@@ -40,7 +43,7 @@ function Recruiterpage() {
                 <div className="menu-func-item">
                   <ul className="func-item-ul">
                     <li className="func-item">
-                      <Link id="link">
+                      <Link to="/job-alert" id="link">
                         <span id="name-function">
                           <ion-icon
                             style={{ marginRight: "10px" }}
@@ -73,7 +76,7 @@ function Recruiterpage() {
                       </Link>
                     </li>
                     <li className="func-item">
-                      <Link id="link">
+                      <Link id="link" to="/add-question">
                         <span id="name-function">
                           <ion-icon
                             style={{ marginRight: "10px" }}
@@ -100,13 +103,15 @@ function Recruiterpage() {
             </div>
             <div className="row-2">
               <Switch>
-                <Route exact path="/add-job">
+                <Route exact path={"/add-job"}>
                   <FuncAddJob />
                 </Route>
-                <Route exact path="/view-job">
+                <Route path={"/view-job"}>
                   <FuncViewJob />
                 </Route>
+                <Route path={"/add-question"} component={AddQues} />
               </Switch>
+
               {/* <div className="job-bx-title">
                 <h5 className="h5-title">POST A JOB</h5>
               </div>
