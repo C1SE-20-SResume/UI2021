@@ -29,8 +29,10 @@ function App() {
       <Switch>
         <Route>
           <Header />
-
           <Switch>
+            <Route exact path={"/"}>
+              <Home />
+            </Route>
             <Route path={`/joblist`}>
               <Slider />
               <ListJob />
@@ -55,7 +57,7 @@ function App() {
                 </Switch>
               </Route>
             )}
-            <Route exact path={`/`} component={Home} />
+            <Route exact path={`*`} component={Home} />
           </Switch>
         </Route>
       </Switch>
