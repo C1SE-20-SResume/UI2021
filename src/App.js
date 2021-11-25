@@ -31,15 +31,15 @@ function App() {
           <Header />
 
           <Switch>
-            <Route path={`/joblist`}>
+            <Route path="/joblist">
               <Slider />
               <ListJob />
             </Route>
-            <Route path={`/job-detail/:job_id`}>
+            <Route path="/job-detail/:job_id">
               <Slider />
               <Jobtdetail />
             </Route>
-            <Route path={`/recruiter-page`}>
+            <Route path="/recruiter-page">
               <Slider />
               <Recruiterpage />
             </Route>
@@ -49,13 +49,13 @@ function App() {
               // </Route>
               <Route>
                 <Switch>
-                  <Route path={`/login`}>
+                  <Route path="/login">
                     <Login />
                   </Route>
                 </Switch>
               </Route>
             )}
-            <Route exact path={`/`} component={Home} />
+            <Route exact path="/" component={Home} />
           </Switch>
         </Route>
       </Switch>
