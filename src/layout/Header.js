@@ -77,7 +77,9 @@ function Header() {
               </Link>
             </li>
             {cookies.user && userRole.role_level == 0 ? (
-              <li className="nav-menu-item">Quiz Test</li>
+              <li className="nav-menu-item">
+                <Link to="/quiz-test">Quiz Test</Link>
+              </li>
             ) : (
               []
             )}
