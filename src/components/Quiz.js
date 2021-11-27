@@ -71,7 +71,7 @@ function Quiz() {
           </div>
         </>
       )}
-      {number === 4 && <Over score={score} number={4} />}
+      {number === 9 && <Over score={score} number={9} />}
     </div>
   );
 }
