@@ -1,7 +1,6 @@
 import React from "react";
 
 function Over({ score, number }) {
-  console.log("a");
   const refreshPage = () => window.location.reload();
   return (
     <div className="text-center">

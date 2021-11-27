@@ -40,7 +40,6 @@ function Header() {
       .then((res) => res.json())
       .then((data) => {
         setListUser(data.data);
-        console.log("check>>", data.data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -49,15 +48,13 @@ function Header() {
   useEffect(() => {
     if (cookies.user) {
       fetch(`${process.env.REACT_APP_API_URL}/user?api_token=${cookies.user}`)
-        .then((res) => res.json())
+        .then((res) => (res.status === 200 ? res.json() : removeCookie("user")))
         .then((data) => {
           setUserRole(data);
-          console.log("role :", data.role_level);
         })
         .catch((err) => console.log(err));
-      console.log("role level : ", userRole.role_level);
     }
-  }, []);
+  }, [cookies.user]);
 
   return (
     <>
@@ -76,7 +73,7 @@ function Header() {
                 Job
               </Link>
             </li>
-            {cookies.user && userRole.role_level == 0 ? (
+            {cookies.user && userRole.role_level === 0 ? (
               <li className="nav-menu-item">
                 <Link to="/quiz-test">Quiz Test</Link>
               </li>
@@ -84,7 +81,6 @@ function Header() {
               []
             )}
             <li className="nav-menu-item">
-              {" "}
               <Link id="link">Contact</Link>
             </li>
             {userRole.role_level && userRole.role_level == 1 ? (

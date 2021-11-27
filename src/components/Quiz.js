@@ -26,7 +26,7 @@ function Quiz() {
     )
       .then((res) => res.json())
       .then((res) => {
-        let listQuiz = { ...res.aptitude, ...res.personality };
+        let listQuiz = { ...res.aptitude };
         for (let key in listQuiz) {
           if (listQuiz[key] !== null) {
             console.log(listQuiz[key]);
