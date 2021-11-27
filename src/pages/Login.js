@@ -45,9 +45,9 @@ function Login() {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         if (data.success === true) {
           setCookie("user", data.api_token);
-          // redirect to home page
           window.location.href = "/";
         } else {
         }

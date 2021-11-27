@@ -9,6 +9,8 @@ function Quiz() {
   const [number, setNumber] = useState(0);
   const [score, setScore] = useState(0);
 
+  const [person, setPerson] = useState({});
+
   const shuffle = (arr) => arr.sort(() => Math.random() - 0.5);
 
   const pickAnswers = (e) => {
@@ -26,7 +28,9 @@ function Quiz() {
     )
       .then((res) => res.json())
       .then((res) => {
+        setPerson({ ...res.personality });
         let listQuiz = { ...res.aptitude };
+        let count = 0;
         for (let key in listQuiz) {
           if (listQuiz[key] !== null) {
             console.log(listQuiz[key]);
@@ -48,6 +52,8 @@ function Quiz() {
               ];
             });
           }
+          count++;
+          if (count === 15) break;
         }
       })
       .catch((err) => console.error(err));
@@ -71,7 +77,7 @@ function Quiz() {
           </div>
         </>
       )}
-      {number === 9 && <Over score={score} number={9} />}
+      {number === 15 && <Over score={score} number={15} person={person} />}
     </div>
   );
 }

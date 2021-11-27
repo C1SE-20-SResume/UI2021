@@ -77,7 +77,6 @@ function AddQues() {
           window.location.reload();
         } else {
           alert("Add question fail");
-          window.location.reload();
         }
       })
       .catch((err) => {
