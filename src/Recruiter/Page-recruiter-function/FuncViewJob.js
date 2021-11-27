@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  BrowserRouter,
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 function FuncViewJob() {
-  const [cookies, setCookies] = useCookies(["user"]);
+  const [cookies] = useCookies(["user"]);
   const [listJob, setListjob] = useState([]);
   useEffect(() => {
     fetch(
@@ -20,7 +14,7 @@ function FuncViewJob() {
         console.log("check data view job>>", data.data.id);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [cookies.user]);
   return (
     <>
       <div className="job-bx-title">

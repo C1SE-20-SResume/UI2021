@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useCookies } from "react-cookie";
 function AddQues() {
   const [cookies] = useCookies(["user"]);
   const [ques, setQues] = useState({
     option: "1",
   });
-  const [personality, setPersonality] = useState({
+  const [personality] = useState({
     4: "openness",
     5: "conscientiousness",
     6: "extroversion",
@@ -13,16 +13,10 @@ function AddQues() {
     8: "neuroticism",
   });
 
-  const [aptitude, setAptitude] = useState({
+  const [aptitude] = useState({
     1: "math",
     2: "english",
     3: "programming",
-  });
-
-  const [knowledge, setKnowledge] = useState({
-    1: {},
-    2: {},
-    3: {},
   });
 
   const handleChange = (e) => {

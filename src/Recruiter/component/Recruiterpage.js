@@ -1,16 +1,9 @@
-import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useRouteMatch,
-  BrowserRouter,
-} from "react-router-dom";
+import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import img from "./img1.png";
 import FuncAddJob from "../Page-recruiter-function/FuncAddJob";
 import FuncViewJob from "../Page-recruiter-function/FuncViewJob";
-import FuncJobAlert from "../Page-recruiter-function/FuncJobAlert";
+// import FuncJobAlert from "../Page-recruiter-function/FuncJobAlert";
 
 import { AddQues } from "../component";
 

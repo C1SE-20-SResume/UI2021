@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
 import Over from "./Over";
 
 function Quiz() {
+  const [cookies] = useCookies(["user"]);
+
   const [quiz, setQuiz] = useState([]);
   const [number, setNumber] = useState(0);
   const [score, setScore] = useState(0);
@@ -17,21 +20,38 @@ function Quiz() {
   };
 
   useEffect(() => {
+    console.log(process.env.REACT_APP_API_URL);
     fetch(
-      "https://opentdb.com/api.php?amount=5&category=18&difficulty=easy&type=multiple"
+      `${process.env.REACT_APP_API_URL}/candidate/quiz/test?api_token=${cookies.user}`
     )
       .then((res) => res.json())
       .then((res) => {
-        setQuiz(
-          res.results.map((item) => ({
-            question: item.question,
-            options: shuffle([...item.incorrect_answers, item.correct_answer]),
-            answer: item.correct_answer,
-          }))
-        );
+        let listQuiz = { ...res.aptitude, ...res.personality };
+        for (let key in listQuiz) {
+          if (listQuiz[key] !== null) {
+            console.log(listQuiz[key]);
+            setQuiz((prev) => {
+              return [
+                ...prev,
+                ...listQuiz[key].map((item) => ({
+                  question: item.ques_content,
+                  options:
+                    (item.option !== null &&
+                      shuffle([
+                        ...item.option.map((option) => option.option_content),
+                      ])) ||
+                    [],
+                  answer:
+                    item.option &&
+                    item.option.find((option) => option.correct).option_content,
+                })),
+              ];
+            });
+          }
+        }
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [cookies.user]);
 
   return (
     <div className="max-w-[calc(800px+1.75rem)] my-0 mx-auto py-8">
@@ -51,7 +71,7 @@ function Quiz() {
           </div>
         </>
       )}
-      {number === 5 && <Over score={score} number={5} />}
+      {number === 4 && <Over score={score} number={4} />}
     </div>
   );
 }

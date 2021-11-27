@@ -1,15 +1,8 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useCookies } from "react-cookie";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  BrowserRouter,
-} from "react-router-dom";
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 export default function FuncAddJob() {
   const [inputList, setInputList] = useState([{ keyword: "", weight: "" }]);
@@ -29,14 +22,14 @@ export default function FuncAddJob() {
 
   // handle click event of the Add button
   const handleAddClick = () => {
-    if (inputList.length == 10) {
+    if (inputList.length === 10) {
       toast.error("Sorry :( keyword must be less than 10 elements ");
       return false;
     }
     setInputList([...inputList, { keyword: "", weight: "" }]);
   };
   const { register, handleSubmit } = useForm();
-  const [cookies, setCookie] = useCookies(["user"]);
+  const [cookies] = useCookies(["user"]);
   const onSubmit = (data) => {
     console.log(data);
     console.log(inputList);

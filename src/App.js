@@ -3,13 +3,7 @@ import Msg from "./ReactToastify/Msg";
 import { useCookies } from "react-cookie";
 import "./App.css";
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  BrowserRouter,
-  Link,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from "./layout/Header";
 
 import Home from "./pages/Home";
@@ -43,7 +37,7 @@ function App() {
             <Login />
           </Route>
         ) : (
-          <>
+          <Switch>
             <Route path="/recruiter-page">
               <Slider />
               <Recruiterpage />
@@ -51,8 +45,9 @@ function App() {
             <Route path="/quiz-test">
               <QuizTest />
             </Route>
-          </>
+          </Switch>
         )}
+        <Route path="*" component={Home} />
       </Switch>
 
       <Footer />
