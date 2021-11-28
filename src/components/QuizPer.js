@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
 
-function QuizPer({ person }) {
+function QuizPer({ person, aptitudeScore }) {
+  console.log(aptitudeScore);
+  const [cookies] = useCookies(["user"]);
+
   const [quiz, setQuiz] = useState([]);
+  const [sumType, setSumType] = useState([]);
 
   useEffect(() => {
     for (let key in person) {
@@ -11,14 +16,61 @@ function QuizPer({ person }) {
           ...person[key].map((item) => ({
             question: item.ques_content,
             ques_id: item.ques_id,
+            type_id: item.type_id,
           })),
         ];
       });
     }
   }, [person]);
+  useEffect(() => {
+    setSumType(
+      quiz.reduce((rv, x) => {
+        (rv[x.type_id] = rv[x.type_id] || []).push(x);
+        return rv;
+      }, {})
+    );
+  }, [quiz]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let score = [];
+
+    for (let key in sumType) {
+      score.push({
+        type_id: key,
+        score: sumType[key].reduce((rv, x) => {
+          return rv + x.score;
+        }, 0),
+      });
+    }
+
+    fetch(
+      `${process.env.REACT_APP_API_URL}/candidate/quiz/result?api_token=${cookies.user}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ques_result: [...score, ...aptitudeScore],
+        }),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          alert(data.message);
+        } else {
+          alert(data.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
       <div className="mx-auto">
         To take the Big Five personality assessment, rate each statement
         according to how well it describes you. Base your ratings on how you
@@ -44,8 +96,13 @@ function QuizPer({ person }) {
                   <td key={i} className="text-center">
                     <input
                       type="radio"
-                      value="5"
+                      value={i}
                       name={`ques_id_${item.ques_id}`}
+                      attr-type={item.type_id}
+                      onChange={(e) => {
+                        item.score = parseInt(e.target.value);
+                      }}
+                      {...(i === 1 && { required: true })}
                     />
                   </td>
                 ))}
@@ -57,7 +114,7 @@ function QuizPer({ person }) {
       <button className="block border border-[#616A94] rounded-2xl px-8 py-2 text-base outline-none select-none mt-4 cursor-pointer hover:bg-[#616A94] mx-auto transition duration-300">
         Submit
       </button>
-    </div>
+    </form>
   );
 }
 
