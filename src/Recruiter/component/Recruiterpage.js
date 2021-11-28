@@ -1,11 +1,22 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+// import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import React, { Component, useParams } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+  BrowserRouter,
+} from "react-router-dom";
 import img from "./img1.png";
 import FuncAddJob from "../Page-recruiter-function/FuncAddJob";
 import FuncViewJob from "../Page-recruiter-function/FuncViewJob";
 // import FuncJobAlert from "../Page-recruiter-function/FuncJobAlert";
 
 import { AddQues } from "../component";
+import ViewQues from "./ViewQues";
+import FuncEditJob from "../Page-recruiter-function/FuncEditJob";
+import JobAlert from "./JobAlert";
 
 function Recruiterpage() {
   return (
@@ -80,7 +91,7 @@ function Recruiterpage() {
                       </Link>
                     </li>
                     <li className="func-item">
-                      <Link id="link">
+                      <Link id="link" to="/view-question">
                         <span id="name-function">
                           <ion-icon
                             style={{ marginRight: "10px" }}
@@ -102,7 +113,10 @@ function Recruiterpage() {
                 <Route path={"/view-job"}>
                   <FuncViewJob />
                 </Route>
+                <Route path={"/job-alert"} component={JobAlert} />
                 <Route path={"/add-question"} component={AddQues} />
+                <Route path={"/view-question"} component={ViewQues} />
+                <Route path={"/edit-job/:job_id"} component={FuncEditJob} />
               </Switch>
 
               {/* <div className="job-bx-title">
