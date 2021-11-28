@@ -33,10 +33,6 @@ function App() {
         </Route>
         <Route exact path="/" component={Home} />
         {!cookies.user ? (
-          // <Route path="/login">
-          //   <Login />
-          // </Route>
-
           <Route path="/login">
             <Login />
           </Route>

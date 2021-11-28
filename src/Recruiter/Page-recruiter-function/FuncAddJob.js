@@ -74,7 +74,7 @@ export default function FuncAddJob() {
   return (
     <>
       <div className="job-bx-title">
-        <h5 className="h5-title">ADD JOB</h5>
+        <h5 className="h5-title">POST A JOB</h5>
       </div>
 
       <div className="flexible-div">
@@ -117,11 +117,7 @@ export default function FuncAddJob() {
             </div>
             <div className="box-shield">
               <label className="lable-row-input">Date Expire</label>
-              <input
-                ref={register}
-                type="datetime-local"
-                name="dateExpire"
-              ></input>
+              <input ref={register} type="date" name="dateExpire"></input>
             </div>
           </div>
           {inputList.map((x, i) => {
