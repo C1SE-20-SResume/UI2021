@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { Component, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useCookies } from "react-cookie";
-
-import { toast } from "react-toastify";
-
-export default function FuncAddJob() {
+import { useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+function FuncEditJob() {
+  const { job_id } = useParams();
   const [inputList, setInputList] = useState([{ keyword: "", weight: "" }]);
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -22,17 +22,16 @@ export default function FuncAddJob() {
 
   // handle click event of the Add button
   const handleAddClick = () => {
-    if (inputList.length === 10) {
+    if (inputList.length == 10) {
       toast.error("Sorry :( keyword must be less than 10 elements ");
       return false;
     }
     setInputList([...inputList, { keyword: "", weight: "" }]);
   };
   const { register, handleSubmit } = useForm();
-  const [cookies] = useCookies(["user"]);
+  const [cookies, setCookie] = useCookies(["user"]);
   const onSubmit = (data) => {
     console.log(data);
-    console.log(inputList);
     var formdata = new FormData();
     // formdata.append("job_title", "eventvalue");
     // formdata.append("job_descrip", "evenvalue");
@@ -57,24 +56,40 @@ export default function FuncAddJob() {
     };
 
     fetch(
-      `${process.env.REACT_APP_API_URL}/recruiter/job/add?api_token=${cookies.user}`,
+      `${process.env.REACT_APP_API_URL}/recruiter/job/update/${job_id}?api_token=${cookies.user}`,
       requestOptions
     )
       .then((response) => response.text())
       .then((data) => {
-        // if (result.success === true) {
-        //   toast.success(result.message);
-        // }
+        if (data.success === true) {
+          toast.success(data.message);
+        }
         console.log(data);
-        alert("ok");
+        toast.success(data.message);
       })
       .catch((error) => alert("error", error));
   };
 
+  const [job, setJob] = useState({});
+
+  useEffect(() => {
+    fetch(
+      `${process.env.REACT_APP_API_URL}/recruiter/job/edit/${job_id}?api_token=${cookies.user}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setJob(data.data);
+        setInputList(data.data.job_keyword);
+        console.log("check job array key :>>", data.data.job_keyword);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  console.log(inputList);
+
   return (
     <>
       <div className="job-bx-title">
-        <h5 className="h5-title">ADD JOB</h5>
+        <h5 className="h5-title">EDIT JOB</h5>
       </div>
 
       <div className="flexible-div">
@@ -86,34 +101,61 @@ export default function FuncAddJob() {
                 ref={register}
                 name="jobtitle"
                 type="text"
+                defaultValue={job.job_title}
                 placeholder="title"
               ></input>
             </div>
             <div className="box-shield">
               <label className="lable-row-input">Job Require</label>
-              <input ref={register} type="text" name="jobRequire"></input>
+              <input
+                ref={register}
+                defaultValue={job.job_require}
+                type="text"
+                name="jobRequire"
+              ></input>
             </div>
           </div>
           <div className="row-input-desc">
             <label className="lable-row-input">Job Description</label>
-            <textarea ref={register} name="jobDescription" rows={5} cols={5}>
+            <textarea
+              ref={register}
+              defaultValue={job.job_descrip}
+              name="jobDescription"
+              rows={5}
+              cols={5}
+            >
               {" "}
             </textarea>
           </div>
           <div className="row-input">
             <div className="box-shield">
               <label className="lable-row-input">Job Benefit</label>
-              <input ref={register} type="text" name="jobBenefit"></input>
+              <input
+                ref={register}
+                type="text"
+                defaultValue={job.job_benefit}
+                name="jobBenefit"
+              ></input>
             </div>
             <div className="box-shield">
               <label className="lable-row-input">Job Place</label>
-              <input ref={register} type="text" name="jobPlace"></input>
+              <input
+                ref={register}
+                type="text"
+                defaultValue={job.job_place}
+                name="jobPlace"
+              ></input>
             </div>
           </div>
           <div className="row-input">
             <div className="box-shield">
               <label className="lable-row-input">Salary</label>
-              <input ref={register} type="number" name="salary"></input>
+              <input
+                ref={register}
+                defaultValue={job.salary}
+                type="number"
+                name="salary"
+              ></input>
             </div>
             <div className="box-shield">
               <label className="lable-row-input">Date Expire</label>
@@ -195,3 +237,5 @@ export default function FuncAddJob() {
     </>
   );
 }
+
+export default FuncEditJob;
