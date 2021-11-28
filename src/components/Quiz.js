@@ -13,7 +13,7 @@ function Quiz() {
 
   const [mess, setMess] = useState("");
 
-  const [countdown, setCountdown] = useState(3);
+  const [countdown, setCountdown] = useState(5);
 
   const shuffle = (arr) => arr.sort(() => Math.random() - 0.5);
 
@@ -71,12 +71,13 @@ function Quiz() {
         } else {
           setMess(res.message);
           //  redirect to home page in 3s
-          setInterval(() => {
+          const interval = setInterval(() => {
             setCountdown((prev) => prev - 1);
           }, 1000);
           setTimeout(() => {
+            clearInterval(interval);
             window.location.href = "/";
-          }, 3000);
+          }, 5000);
         }
       })
       .catch((err) => console.error(err));
