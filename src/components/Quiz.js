@@ -11,6 +11,10 @@ function Quiz() {
 
   const [person, setPerson] = useState({});
 
+  const [mess, setMess] = useState("");
+
+  const [countdown, setCountdown] = useState(3);
+
   const shuffle = (arr) => arr.sort(() => Math.random() - 0.5);
 
   const pickAnswers = (e, type_id) => {
@@ -35,32 +39,44 @@ function Quiz() {
     )
       .then((res) => res.json())
       .then((res) => {
-        setPerson({ ...res.personality });
-        let listQuiz = { ...res.aptitude };
-        let count = 0;
-        for (let key in listQuiz) {
-          if (listQuiz[key] !== null) {
-            setQuiz((prev) => {
-              return [
-                ...prev,
-                ...listQuiz[key].map((item) => ({
-                  question: item.ques_content,
-                  options:
-                    (item.option !== null &&
-                      shuffle([
-                        ...item.option.map((option) => option.option_content),
-                      ])) ||
-                    [],
-                  answer:
-                    item.option &&
-                    item.option.find((option) => option.correct).option_content,
-                  type_id: item.type_id,
-                })),
-              ];
-            });
+        if (res.success) {
+          setPerson({ ...res.personality });
+          let listQuiz = { ...res.aptitude };
+          let count = 0;
+          for (let key in listQuiz) {
+            if (listQuiz[key] !== null) {
+              setQuiz((prev) => {
+                return [
+                  ...prev,
+                  ...listQuiz[key].map((item) => ({
+                    question: item.ques_content,
+                    options:
+                      (item.option !== null &&
+                        shuffle([
+                          ...item.option.map((option) => option.option_content),
+                        ])) ||
+                      [],
+                    answer:
+                      item.option &&
+                      item.option.find((option) => option.correct)
+                        .option_content,
+                    type_id: item.type_id,
+                  })),
+                ];
+              });
+            }
+            count++;
+            if (count === 15) break;
           }
-          count++;
-          if (count === 15) break;
+        } else {
+          setMess(res.message);
+          //  redirect to home page in 3s
+          setInterval(() => {
+            setCountdown((prev) => prev - 1);
+          }, 1000);
+          setTimeout(() => {
+            window.location.href = "/";
+          }, 3000);
         }
       })
       .catch((err) => console.error(err));
@@ -95,6 +111,12 @@ function Quiz() {
           }
         })}
       {number === 15 && <Over score={[...score]} number={15} person={person} />}
+      {mess && (
+        <div className="text-center">
+          <div>{mess}</div>
+          <div>Will redirect to home page in {countdown}... seconds</div>
+        </div>
+      )}
     </div>
   );
 }

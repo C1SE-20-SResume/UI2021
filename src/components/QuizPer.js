@@ -102,6 +102,7 @@ function QuizPer({ person, aptitudeScore }) {
                       onChange={(e) => {
                         item.score = parseInt(e.target.value);
                       }}
+                      {...(i === 1 && { required: true })}
                     />
                   </td>
                 ))}
