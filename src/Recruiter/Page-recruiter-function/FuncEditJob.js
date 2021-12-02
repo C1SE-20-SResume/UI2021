@@ -60,12 +60,8 @@ function FuncEditJob() {
       requestOptions
     )
       .then((response) => response.text())
-      .then((data) => {
-        if (data.success === true) {
-          toast.success(data.message);
-        }
-        console.log(data);
-        toast.success(data.message);
+      .then((result) => {
+        toast.success("you have successfully added  ");
       })
       .catch((error) => alert("error", error));
   };
@@ -84,7 +80,7 @@ function FuncEditJob() {
       })
       .catch((err) => console.log(err));
   }, []);
-  console.log(inputList);
+  console.log("check inputlist");
 
   return (
     <>
@@ -172,10 +168,10 @@ function FuncEditJob() {
                 <div className="box-shield">
                   <label className="lable-row-input">Keyword </label>
                   <select
+                    defaultValue={inputList[i].keyword}
                     name="keyword"
                     onChange={(e) => handleInputChange(e, i)}
                   >
-                    <option value="---">language</option>
                     <option value="java">java</option>
                     <option value="php">php</option>
                     <option value="python">python </option>
@@ -193,10 +189,10 @@ function FuncEditJob() {
                 <div className="box-shield">
                   <label className="lable-row-input">Weight </label>
                   <select
+                    defaultValue={inputList[i].weight}
                     name="weight"
                     onChange={(e) => handleInputChange(e, i)}
                   >
-                    <option value="---">number weight</option>
                     <option value="1">very low</option>
                     <option value="2">low</option>
                     <option value="3">medium</option>

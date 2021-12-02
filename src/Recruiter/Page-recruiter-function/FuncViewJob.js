@@ -24,8 +24,16 @@ function FuncViewJob() {
       .then((data) => {
         if (data.status) {
           toast.success(data.message);
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
+        } else {
+          toast.error(data.message);
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
+          return;
         }
-        window.location.reload();
       })
       .catch((err) => console.log(err));
   };

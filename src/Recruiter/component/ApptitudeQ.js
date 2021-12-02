@@ -8,6 +8,7 @@ import {
   useParams,
 } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { toast } from "react-toastify";
 
 function ApptitudeQ() {
   const [listques, setlistques] = useState({});
@@ -31,7 +32,12 @@ function ApptitudeQ() {
       .then((res) => res.json())
       .then((data) => {
         if (data.status === true) {
-          window.location.reload();
+          if (data.status === true) {
+            toast.success(data.message);
+            setTimeout(() => {
+              window.location.reload();
+            }, 500);
+          }
         }
       })
       .catch((err) => console.log(err));

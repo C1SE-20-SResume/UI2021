@@ -1396,8 +1396,9 @@ width: 300px;
 }
 .number-applied span{
   display: inline-block;
-
+  position: absolute;
   background-color: #008cff;
+  right: 0;
 
     color: #fff;
     border: 0;

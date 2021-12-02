@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function PersonalityQ() {
   const [listques, setlistques] = useState({});
@@ -31,7 +32,10 @@ function PersonalityQ() {
       .then((res) => res.json())
       .then((data) => {
         if (data.status === true) {
-          window.location.reload();
+          toast.success(data.message);
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
         }
       })
       .catch((err) => console.log(err));

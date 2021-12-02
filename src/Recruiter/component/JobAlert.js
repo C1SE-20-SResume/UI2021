@@ -47,7 +47,7 @@ function JobAlert() {
                       </ul>
                     </div>
                     <div className="number-applied">
-                      <span>10</span>
+                      <span>{item.apply_sum}</span>
                     </div>
                   </div>
                 </Link>
