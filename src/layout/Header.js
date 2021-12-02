@@ -86,7 +86,7 @@ function Header() {
             {userRole.role_level && userRole.role_level == 1 ? (
               <li className="nav-menu-item for-recrui">
                 {" "}
-                <Link id="link" to="/recruiter-page">
+                <Link id="link" to={"/recruiter-page/job-alert"}>
                   For Recruiter
                 </Link>
               </li>

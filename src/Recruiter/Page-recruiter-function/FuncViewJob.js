@@ -90,7 +90,7 @@ function FuncViewJob() {
                   </td>
                   <td>
                     <div className="function-view-job">
-                      <Link to={`/edit-job/${item.id}`}>
+                      <Link to={`/recruiter-page/edit-job/${item.id}`}>
                         <button className="btn-ionicon">
                           <ion-icon id="btn-ionicon" name="build"></ion-icon>
                         </button>
