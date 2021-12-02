@@ -8,7 +8,7 @@ import Header from "./layout/Header";
 
 import Home from "./pages/Home";
 import ListJob from "./pages/ListJob";
-
+import Profile from "./pages/Profile";
 import Footer from "./layout/Footer";
 import Slider from "./layout/Slider";
 import Login from "./pages/Login";
@@ -42,6 +42,10 @@ function App() {
           </Route>
         ) : (
           <Switch>
+            <Route path="/my-profile">
+              <Slider />
+              <Profile />
+            </Route>
             <Route path="/recruiter-page">
               <Slider />
               <Recruiterpage />

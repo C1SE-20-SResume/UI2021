@@ -1,5 +1,5 @@
 // import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import React, { Component, useParams } from "react";
+import React, { Component } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -7,18 +7,23 @@ import {
   Link,
   useRouteMatch,
   BrowserRouter,
+  useParams,
 } from "react-router-dom";
 import img from "./img1.png";
 import FuncAddJob from "../Page-recruiter-function/FuncAddJob";
 import FuncViewJob from "../Page-recruiter-function/FuncViewJob";
+import FuncEditJob from "../Page-recruiter-function/FuncEditJob";
+
 // import FuncJobAlert from "../Page-recruiter-function/FuncJobAlert";
 
 import { AddQues } from "../component";
 import ViewQues from "./ViewQues";
-import FuncEditJob from "../Page-recruiter-function/FuncEditJob";
+
 import JobAlert from "./JobAlert";
 
 function Recruiterpage() {
+  const { job_id } = useParams();
+  let { path, url } = useRouteMatch();
   return (
     <Router>
       <div className="section-padding section-listjob">
@@ -47,7 +52,7 @@ function Recruiterpage() {
                 <div className="menu-func-item">
                   <ul className="func-item-ul">
                     <li className="func-item">
-                      <Link to="/job-alert" id="link">
+                      <Link to={`/job-alert`} id="link">
                         <span id="name-function">
                           <ion-icon
                             style={{ marginRight: "10px" }}
@@ -58,7 +63,7 @@ function Recruiterpage() {
                       </Link>
                     </li>
                     <li className="func-item">
-                      <Link to="/add-job" id="link">
+                      <Link to={`/add-job`} id="link">
                         <span id="name-function">
                           <ion-icon
                             style={{ marginRight: "10px" }}
@@ -69,7 +74,7 @@ function Recruiterpage() {
                       </Link>
                     </li>
                     <li className="func-item">
-                      <Link to="/view-job" id="link">
+                      <Link to={`/view-job`} id="link">
                         <span id="name-function">
                           <ion-icon
                             style={{ marginRight: "10px" }}
@@ -80,7 +85,7 @@ function Recruiterpage() {
                       </Link>
                     </li>
                     <li className="func-item">
-                      <Link id="link" to="/add-question">
+                      <Link id="link" to={`/add-question`}>
                         <span id="name-function">
                           <ion-icon
                             style={{ marginRight: "10px" }}
@@ -91,7 +96,7 @@ function Recruiterpage() {
                       </Link>
                     </li>
                     <li className="func-item">
-                      <Link id="link" to="/view-question">
+                      <Link id="link" to={`/view-question/apptitude-question`}>
                         <span id="name-function">
                           <ion-icon
                             style={{ marginRight: "10px" }}
@@ -107,7 +112,21 @@ function Recruiterpage() {
             </div>
             <div className="row-2">
               <Switch>
-                <Route exact path={"/add-job"}>
+                <Route path={"/job-alert"}>
+                  <JobAlert />
+                </Route>
+                <Route path={`/view-job`}>
+                  <FuncViewJob />
+                </Route>
+
+                <Route path={`/add-question`} component={AddQues} />
+                <Route path={`/add-job`} component={FuncAddJob} />
+                <Route path={`/add-question`} component={AddQues} />
+                <Route path={`/view-question`} component={ViewQues} />
+                <Route path={`/edit-job/:job_id`} component={FuncEditJob} />
+              </Switch>
+              {/* <Switch> (du)
+                <Route path={"/add-job"}>
                   <FuncAddJob />
                 </Route>
                 <Route path={"/view-job"}>
@@ -117,7 +136,7 @@ function Recruiterpage() {
                 <Route path={"/add-question"} component={AddQues} />
                 <Route path={"/view-question"} component={ViewQues} />
                 <Route path={"/edit-job/:job_id"} component={FuncEditJob} />
-              </Switch>
+              </Switch> */}
 
               {/* <div className="job-bx-title">
                 <h5 className="h5-title">POST A JOB</h5>

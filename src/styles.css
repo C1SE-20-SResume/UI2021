@@ -955,7 +955,7 @@ div.button-submit-cv > button:hover {
   display: inline-block;
   padding: 0 20px;
   background-color: #00c49f;
-  border-radius: 0 100% 100% 0;
+
 }
 
 #primary_nav_wrap ul {
@@ -1124,6 +1124,9 @@ div.button-submit-cv > button:hover {
   justify-content: space-between;
   align-items: center;
   position: relative;
+}
+#gender-profile{
+  width: 100%;
 }
 .row-input .box-shield input {
   padding: 10px 15px;
@@ -1366,75 +1369,65 @@ margin-right: 10px;
   color: red;
   font-size:10px;
 }
-
-
-.list-job-click{
-  list-style:none;
-}
-.info-job{
-font-size: 10px;
-padding:0 10px;
-margin:0 10px;
-display: inline-block;
-background-color: #008cff;
-border-radius: 20px;
-} 
-.list-job-click{
-  width: 100%;
- 
- display: flex;
- overflow-x: SCROLL;
-}
-.list-job-click li{
-  margin: 10px;
-}
-.card-job-click{
-  padding: 5px;
-  background-color: yellowgreen;
-  border-radius:20px;
-  width: 300px;
-}
-/* -------------seraching table in job alert-------------- */
-.search {
-  width: 100%;
-
+.job-list-apply{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 
 }
 
-.searchTerm {
-  width: 100%;
-  border: 3px solid #00B4CC;
-  border-right: none;
-  padding: 5px;
-  height: 20px;
-  border-radius: 5px 0 0 5px;
-  outline: none;
-  color: #9DBFAF;
+.card-bx{
+  display: flex;
+width: 300px;
+  overflow: hidden;
+  padding: 10px;
+  justify-content: center;
+  padding: 10px;
+    background-color: #fff;
+    border-left: 5px solid #e1e7ff;
+    border-radius: 4px;
+    box-shadow: 0 0 10px 0 rgb(0 24 128 / 10%);
+    margin-bottom: 20px;
+    position: relative;
+    cursor: pointer;
 }
-
-.searchTerm:focus{
-  color: #00B4CC;
+.card-bx:hover{
+  border-left: 5px solid #008cff;
 }
+.number-applied span{
+  display: inline-block;
 
-.searchButton {
-  width: 40px;
-  height: 36px;
-  border: 1px solid #00B4CC;
-  background: #00B4CC;
-  text-align: center;
-  color: #fff;
-  border-radius: 0 5px 5px 0;
+  background-color: #008cff;
+
+    color: #fff;
+    border: 0;
+    border-radius: 5px;
+    padding: 10px;
+    line-height: 16px;
+  
+}
+.card-bx .job-post-info p{
+  font-size:10px;
+}
+.job-post-info ul li {
+  padding: 5px !important;
+  font-size: 13px;
+}
+.title-job-applied{
+  overflow: hidden;
+
+}
+.button-select-question{
+  display: inline-block;
+  padding: 10px;
+  margin-bottom: 20px;
   cursor: pointer;
-  font-size: 20px;
+  border-radius: 20px;
 }
-
-/*Resize the wrap to see the search bar change!*/
-.wrap{
-  width: 30%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.select-question-div{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
   /* 
   ---------------RESPONSIVE------------------- */

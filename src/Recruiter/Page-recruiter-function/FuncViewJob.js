@@ -6,6 +6,7 @@ import {
   Route,
   Link,
   BrowserRouter,
+  useRouteMatch,
 } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -13,21 +14,18 @@ import { ToastContainer, toast } from "react-toastify";
 function FuncViewJob() {
   const { job_id } = useParams();
   const { status, setStatus } = useState("");
+  let { path, url } = useRouteMatch();
 
-  const OnClicKCloseJob = () => {
+  const OnClicKCloseJob = (job_id) => {
     fetch(
-      `${process.env.REACT_APP_API_URL}/recruiter/job/close/1?api_token=${cookies.user}`
+      `${process.env.REACT_APP_API_URL}/recruiter/job/close/${job_id}?api_token=${cookies.user}`
     )
       .then((res) => res.json())
       .then((data) => {
-        if (data.status === true) {
-          console.log("aa:", data.status);
-          setStatus(data);
+        if (data.status) {
           toast.success(data.message);
-          console.log("sasasa", data);
-        } else {
-          toast.error(data.message);
         }
+        window.location.reload();
       })
       .catch((err) => console.log(err));
   };
@@ -84,7 +82,11 @@ function FuncViewJob() {
                   </td>
                   <td>{item.date_expire}</td>
                   <td>
-                    <ion-icon name="ellipse"></ion-icon>dadad
+                    <ion-icon
+                      style={{ color: "#00c49f" }}
+                      name="ellipse"
+                    ></ion-icon>
+                    Active
                   </td>
                   <td>
                     <div className="function-view-job">
@@ -93,7 +95,10 @@ function FuncViewJob() {
                           <ion-icon id="btn-ionicon" name="build"></ion-icon>
                         </button>
                       </Link>
-                      <button onClick={OnClicKCloseJob} className="btn-ionicon">
+                      <button
+                        onClick={() => OnClicKCloseJob(item.id)}
+                        className="btn-ionicon"
+                      >
                         <ion-icon
                           id="btn-ionicon"
                           name="close-circle"

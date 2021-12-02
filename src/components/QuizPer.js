@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
-
+import { toast } from "react-toastify";
 function QuizPer({ person, aptitudeScore }) {
   console.log(aptitudeScore);
   const [cookies] = useCookies(["user"]);
@@ -59,9 +59,10 @@ function QuizPer({ person, aptitudeScore }) {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          alert(data.message);
+          toast.success(data.message);
+          console.log(data.message);
         } else {
-          alert(data.message);
+          toast.error(data.message);
         }
       })
       .catch((err) => {

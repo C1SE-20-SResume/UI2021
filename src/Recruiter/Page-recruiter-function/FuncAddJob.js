@@ -66,7 +66,7 @@ export default function FuncAddJob() {
         //   toast.success(result.message);
         // }
         console.log(data);
-        alert("ok");
+        toast.success("add succesful");
       })
       .catch((error) => alert("error", error));
   };

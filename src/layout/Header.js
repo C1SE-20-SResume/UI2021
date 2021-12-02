@@ -4,6 +4,7 @@ import slider from "../images/sliderhome/slideimage1.jpg";
 import img3 from "../images/how-it-work/img3.png";
 import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
+
 import { toast } from "react-toastify";
 
 function Header() {
@@ -21,15 +22,14 @@ function Header() {
           setCookie("user", data.api_token);
           removeCookie("user");
 
-          window.location.reload();
           console.log("check", data);
+          window.location.href = "/";
         } else {
           alert(data.message);
         }
       })
       .catch((err) => {
         console.log(err);
-        alert("m chua dang nhap");
       });
   };
 
@@ -91,7 +91,7 @@ function Header() {
                 </Link>
               </li>
             ) : (
-              <></>
+              ""
             )}
           </ul>
 
@@ -105,11 +105,14 @@ function Header() {
                         src={img3}
                         style={({ width: "60px" }, { height: "60px" })}
                       ></img>
-                      <span>user</span>
+                      <span>{userRole.full_name}</span>
                     </div>
                     <ul>
                       <li>
-                        <a href="#">Sub Menu 1</a>
+                        <Link to="/my-profile">
+                          <ion-icon name="person-circle-outline"></ion-icon> My
+                          Profile
+                        </Link>
                       </li>
                       <li>
                         <p onClick={logout} style={{ cursor: "pointer" }}>

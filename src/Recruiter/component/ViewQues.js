@@ -5,73 +5,58 @@ import {
   Route,
   Link,
   BrowserRouter,
+  useRouteMatch,
 } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import ApptitudeQ from "./ApptitudeQ";
+import PersonalityQ from "./PersonalityQ";
 function ViewQues() {
-  const [cookies, setCookie] = useCookies(["user"]);
-  const [listques, setlistques] = useState({});
-  var requestOptions = {
-    method: "GET",
-    redirect: "follow",
-  };
+  // const [listques, setlistques] = useState({});
+  // const [cookies, setCookie] = useCookies(["user"]);
 
-  useEffect(() => {
-    fetch(
-      `${process.env.REACT_APP_API_URL}/recruiter/ques/view?api_token=${cookies.user}`,
-      requestOptions
-    )
-      .then((response) => response.text())
-      .then((data) => {
-        setlistques(data);
-      })
-      .catch((error) => console.log("error", error));
-    console.log("check list 1 ", listques);
-  });
-
+  // useEffect(() => {
+  //   fetch(
+  //     `${process.env.REACT_APP_API_URL}/recruiter/ques/view?api_token=${cookies.user}`
+  //   )
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       console.log("check1", result.apptitude[0]);
+  //       setlistques(result);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
+  let { path, url } = useRouteMatch();
   return (
-    <>
-      <div className="job-bx-title">
+    <Router>
+      <div className="job-bx-title select-question-div ">
         <h5 className="h5-title">VIEW QUESTION</h5>
+        <Link to={`${url}/apptitude-question`}>
+          <input
+            className="button-select-question"
+            type="button"
+            defaultValue="APPTITUDE QUESTION"
+          />
+        </Link>
+        <Link to={`${url}/personality-ques`}>
+          <input
+            className="button-select-question"
+            defaultValue="PERSONALITY QUESTION"
+            type="button"
+          />
+        </Link>
       </div>
       <div className="content-viewJob">
-        {listques.apptitude.map((item, index) => {})}
-        <table>
-          <tbody>
-            <tr>
-              <th>Question ID</th>
-
-              <th>Type Question </th>
-              <th>Date Update</th>
-              <th>Function</th>
-            </tr>
-            {/* {listques &&
-              listques.length > 0 &&
-              listques.map((item, index) => {
-                return (
-                  <tr key={item.index}>
-                    <td>{item.id}</td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                      {" "}
-                      <div className="function-view-job">
-                        <Link>
-                          <button className="btn-ionicon">
-                            <ion-icon id="btn-ionicon" name="build"></ion-icon>
-                          </button>
-                        </Link>
-                        <button className="btn-ionicon">
-                          <ion-icon id="btn-ionicon" name="trash"></ion-icon>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })} */}
-          </tbody>
-        </table>
+        <Switch>
+          {/* <Route  path={path} component={ApptitudeQ} /> */}
+          <Route
+            exact
+            path={`${path}/apptitude-question`}
+            component={ApptitudeQ}
+          />
+          <Route path={`${path}/personality-ques`} component={PersonalityQ} />
+        </Switch>
       </div>
-    </>
+    </Router>
   );
 }
 

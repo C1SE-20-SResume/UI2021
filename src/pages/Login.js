@@ -127,7 +127,7 @@ function Login() {
 
             <button className="btn login">login</button>
             <p>
-              <a href="javascript:void(0)">Forgotten account ?</a>
+              <a href="javascript:void(0)">Forgotten password ?</a>
             </p>
           </form>
         </div>
